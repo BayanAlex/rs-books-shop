@@ -1,0 +1,278 @@
+@import 'styles/reset.css';
+@import 'styles/normalize.css';
+@import 'styles/fonts.css';
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.body {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  background: #FFFFFF;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.button {
+  width: 160px;
+  height: 45px;
+  background: #FFB800;
+  border-radius: 22.5px;
+  font-size: 18px;
+  line-height: 130%;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.header {
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%), url(images/HeaderBG.png) top left/contain repeat;
+  width: 100%;
+  height: 400px;
+}
+.header__content {
+  height: 100%;
+  width: 100%;
+  padding: 80px 0 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.header__caption {
+  width: 750px;
+  font-weight: 700;
+  font-size: 70px;
+  line-height: 110%;
+  margin: 0;
+  text-align: center;
+  color: #FFFFFF;
+}
+.header__search-input {
+  position: relative;
+  width: 600px;
+  height: 55px;
+  box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.25), 0px 40px 40px -15px rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  background: url("images/SearchLoupe.svg") 9px 9px/37px 37px no-repeat, #FFFFFF;
+  padding-left: 55px;
+  font-weight: 400;
+  font-size: 20px;
+}
+.header__search-input::-moz-placeholder {
+  color: #DDDDDD;
+}
+.header__search-input:-ms-input-placeholder {
+  color: #DDDDDD;
+}
+.header__search-input::placeholder {
+  color: #DDDDDD;
+}
+.header__search-input::-webkit-search-cancel-button {
+  margin-right: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.main__content {
+  padding: 70px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.price {
+  display: flex;
+  color: #000000;
+  line-height: 1;
+  align-items: end;
+}
+.price__caption {
+  font-weight: 400;
+  font-size: 18px;
+  margin-right: 10px;
+}
+.price__value {
+  position: relative;
+  top: 2px;
+  font-weight: 600;
+  font-size: 28px;
+}
+.price__value::before {
+  content: "$";
+}
+
+.close-button {
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: #FF0000;
+  border-radius: 50%;
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  cursor: pointer;
+}
+.close-button::before, .close-button::after {
+  content: "";
+  width: 2px;
+  height: 16px;
+  background: #FFFFFF;
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 1px);
+  transform-origin: center;
+  transition: all 0.2s ease-out;
+}
+.close-button::after {
+  rotate: -45deg;
+}
+.close-button::before {
+  rotate: 45deg;
+}
+.close-button:hover::before, .close-button:hover::after {
+  transform: scale(1.2);
+  transition: all 0.2s ease-in;
+}
+
+.book__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  display: grid;
+}
+.book__img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: top left;
+     object-position: top left;
+  width: 200px;
+  height: 280px;
+}
+.book__img-wrap {
+  grid-area: book-cover;
+}
+.book__title {
+  grid-area: title;
+  font-weight: 600;
+  line-height: 130%;
+  color: #000000;
+}
+.book__author {
+  grid-area: author;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 130%;
+  color: #FFCA40;
+  margin-top: 20px;
+}
+.book__rating {
+  grid-area: rating;
+  align-self: start;
+}
+.book__rating-star {
+  margin-right: 16px;
+}
+.book__price {
+  grid-area: price;
+  align-self: start;
+}
+.book__buttons {
+  grid-area: buttons;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.book__add-button {
+  width: 160px;
+  height: 45px;
+  background: #FFB800;
+  border-radius: 22.5px;
+  font-size: 18px;
+  line-height: 130%;
+  text-align: center;
+  color: #FFFFFF;
+}
+.book__show-more {
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 18px;
+  line-height: 1;
+  padding: 5px;
+}
+.book_in-catalogue {
+  width: 600px;
+  height: 360px;
+}
+.book_in-catalogue .book__content {
+  -moz-column-gap: 40px;
+       column-gap: 40px;
+  align-items: start;
+  grid-template-columns: 200px auto;
+  grid-template-rows: fit-content(28px) 1fr repeat(3, 45px);
+  grid-template-areas: "book-cover title" "book-cover author" "book-cover rating" "book-cover price" "book-cover buttons";
+}
+.book_in-catalogue .book__title {
+  font-size: 22px;
+}
+.book_in-catalogue .close-button {
+  display: none;
+}
+.book_in-bag {
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+.book_in-bag .book__content {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "book-cover" "title" "author" "price";
+}
+.book_in-bag .book__title {
+  font-size: 18px;
+}
+.book_in-bag .book__author {
+  align-self: center;
+  margin: 5px 0 15px;
+}
+.book_in-bag .book__rating {
+  display: none;
+}
+.book_in-bag .book__buttons {
+  display: none;
+}
+
+.section-caption {
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 130%;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.catalogue {
+  padding: 50px;
+}
+.catalogue__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 600px);
+  gap: 20px;
+}
+
+.bag {
+  background: #F8F8F8;
+  border-radius: 10px;
+}
+.bag__content {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bag__total {
+  margin: 20px 0;
+  scale: 1.2;
+}
