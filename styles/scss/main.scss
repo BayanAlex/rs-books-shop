@@ -2,7 +2,7 @@
     &__content {
         padding: 70px;
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 1fr auto;
     }
 }
 
@@ -27,39 +27,6 @@
     }
 }
 
-.close-button {
-    display: block;
-    width: 32px;
-    height: 32px;
-    background: #FF0000;
-    border-radius: 50%;
-    position: absolute;
-    top: -16px;
-    right: -16px;
-    cursor: pointer;
-    &::before, &::after {
-        content: '';
-        width: 2px;
-        height: 16px;
-        background: #FFFFFF;
-        position: absolute;
-        top: calc(50% - 8px);
-        left: calc(50% - 1px);
-        transform-origin: center;
-        transition: all 0.2s ease-out;
-    }
-    &::after {
-        rotate: -45deg;
-    }
-    &::before {
-        rotate: 45deg;
-    }
-    &:hover::before, &:hover::after {
-        transform: scale(1.2);
-        transition: all 0.2s ease-in;
-    }
-}
-
 .book {
     &__content {
         position: relative;
@@ -75,6 +42,7 @@
         height: 280px;
         &-wrap {
             grid-area: book-cover;
+            position: relative;
         }
     }
     &__title {
@@ -94,8 +62,32 @@
     &__rating {
         grid-area: rating;
         align-self: start;
+        display: flex;
+        &:hover .book__rating-star {
+            background-color: #FFCA40;
+            &:hover {
+                transform-origin: center;
+                scale: 1.2;
+                transition: all 0.2s ease-in;
+                & ~ div {
+                    background-color: lightgray;
+                }
+            }
+        }
         &-star {
-            margin-right: 16px;
+            -webkit-mask-image: url('images/star.svg');
+            mask-image: url('images/star.svg');
+            mask-repeat: no-repeat;
+            background-color: #FFCA40;
+            // margin-right: 16px;
+            padding: 0 8px;
+            width: 38px;
+            height: 22px;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            &_not-active {
+                background-color: lightgray;
+            }
         }
     }
     &__price {
@@ -124,6 +116,15 @@
         font-size: 18px;
         line-height: 1;
         padding: 5px;
+        transition: all 0.2s ease-out;
+        &:hover {
+            scale: 1.05;
+            transform-origin: center;
+            transition: all 0.2s ease-in;
+        }
+        &:active:hover {
+            scale: 1;
+        }
     }
     &__close {
 
@@ -148,6 +149,23 @@
         }
         & .close-button {
             display: none;
+        }
+        & .book__img-wrap:hover::after {
+            content: 'Drag to bag';
+            word-spacing: 100vw;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background-color: rgba(#FFCA40, 0.7);
         }
     }
 
@@ -203,6 +221,16 @@
 .bag {
     background: #F8F8F8;
     border-radius: 10px;
+    transition: all 0.2s ease-out;
+    width: 380px;
+    &_highlight {
+        background: #FFCA40;
+        transition: all 0.2s ease-in;
+        .bag__confirm-button {
+            background: #F8F8F8;
+            color: #000000;
+        }
+    }
     &__content {
         padding: 50px;
         display: flex;

@@ -20,4 +20,54 @@ html {
     line-height: 130%;
     text-align: center;
     color: #FFFFFF;
+    transition: all 0.2s ease-out;
+    &:not(:disabled):not(:active):hover {
+        scale: 1.05;
+        transform-origin: center;
+        transition: all 0.2s ease-in;
+    }
+    &:disabled {
+        background: lightgray;
+        cursor: default;
+    }
+    &:active:hover {
+        scale: 1;
+    }
+}
+
+.close-button {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: #FF0000;
+    border-radius: 50%;
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    cursor: pointer;
+    &::before, &::after {
+        content: '';
+        width: 2px;
+        height: 16px;
+        background: #FFFFFF;
+        position: absolute;
+        top: calc(50% - 8px);
+        left: calc(50% - 1px);
+        transform-origin: center;
+        transition: all 0.2s ease-out;
+    }
+    &::after {
+        rotate: -45deg;
+    }
+    &::before {
+        rotate: 45deg;
+    }
+    &:hover::before, &:hover::after {
+        transform: scale(1.2);
+        transition: all 0.2s ease-in;
+    }
+    &:active:hover::before, &:active:hover::after {
+        transform: scale(1);
+        transition: all 0.2s ease-out;
+    }
 }

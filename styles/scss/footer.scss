@@ -1,3 +1,18 @@
 .footer {
-
+    background-color: #F8F8F8;
+    &__content {
+        height: 100px;
+        padding: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__github-img, &__rs-img {
+        height: 30px;
+    }
+    &__copyright {
+        font-size: 28px;
+        font-weight: 700;
+        color: #FFCA40;
+    }
 }
