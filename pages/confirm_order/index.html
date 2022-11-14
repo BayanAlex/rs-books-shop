@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Books Shop</title>
+</head>
+<body class="body">
+    <div class="body__content">
+        <div class="body__caption">Complete Order</div>
+        <form action="" name="delivery" class="delivery">
+            <div class="delivery__items">
+                <label for="name" class="delivery__info-caption">Name</label>
+                <input type="text" name="name" class="delivery__info-input">
+                <label for="surname" class="delivery__info-caption">Surname</label>
+                <input type="text" name="surname" class="delivery__info-input">
+                <label for="date" class="delivery__info-caption">Delivery date</label>
+                <input type="date" name="date" class="delivery__info-input">
+                <label for="street" class="delivery__info-caption">Street</label>
+                <input type="text" name="street" class="delivery__info-input">
+                <label for="house" class="delivery__info-caption">House number</label>
+                <input type="number" name="house" class="delivery__info-input">
+                <label for="flat" class="delivery__info-caption">Flat</label>
+                <input type="text" name="flat" class="delivery__info-input">
+                <label class="delivery__info-caption">Payment type</label>
+                <div class="delivery__payment-group">
+                    <label for="cash" class="delivery__info-caption">Cash <input type="radio" name="payment" id="cash" class="delivery__radio"></label>
+                    <label for="card" class="delivery__info-caption">Card <input type="radio" name="payment" id="card" checked class="delivery__radio"></label>
+                </div>
+                <label for="gift1" class="delivery__info-caption">Choose a gift</label>
+                <div class="delivery__drop-down-wrap">
+                    <select name="gift1" id="gift1" class="delivery__info-input delivery__info-input_drop-down">
+                        <option value="none">None</option>
+                        <option value="pack" >Pack as a gift</option>
+                        <option value="postcard">Add postcard</option>
+                        <option value="discount">Provide 2% discount to the next time</option>
+                        <option value="pen">Branded pen or pencil</option>
+                    </select>
+                </div>
+                <label for="gift2" class="delivery__info-caption">Choose a gift</label>
+                <div class="delivery__drop-down-wrap">
+                    <select name="gift2" id="gift2" class="delivery__info-input delivery__info-input_drop-down">
+                        <option value="none">None</option>
+                        <option value="pack">Pack as a gift</option>
+                        <option value="postcard">Add postcard</option>
+                        <option value="discount">Provide 2% discount to the next time</option>
+                        <option value="pen">Branded pen or pencil</option>
+                    </select>
+                </div>
+            </div>
+            <input type="submit" class="button delivery__complete-button" value="Complete" disabled>
+            <div class="close-button" onclick="location.href = '../../index.html'"></div>
+        </form>
+    </div>
+</body>
+</html>

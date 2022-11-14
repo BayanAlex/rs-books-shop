@@ -3,7 +3,7 @@
         {
             "format": "expanded",
             "extensionName": ".css",
-            "savePath": "/"
+            "savePath": "~.."
         },
     ],
     "liveSassCompile.settings.excludeList": [
@@ -17,6 +17,7 @@
 	"liveSassCompile.settings.compileOnWatch":	true
 	"liveSassCompile.settings.watchOnLaunch": false
 	"liveSassCompile.settings.includeItems": [
-		"/styles/scss/style.scss",
+		"/scss/style.scss",
+		"/pages/confirm_order/scss/style.scss",
 	]
 }

@@ -1,6 +1,6 @@
-@import 'styles/reset.css';
-@import 'styles/normalize.css';
-@import 'styles/fonts.css';
+@import '../assets/reset.css';
+@import '../assets/normalize.css';
+@import '../assets/fonts.css';
 html {
   -webkit-tap-highlight-color: transparent;
 }
@@ -26,6 +26,7 @@ html {
   text-align: center;
   color: #FFFFFF;
   transition: all 0.2s ease-out;
+  cursor: pointer;
 }
 .button:not(:disabled):not(:active):hover {
   scale: 1.05;
@@ -183,7 +184,7 @@ html {
   font-weight: 400;
   font-size: 18px;
   line-height: 130%;
-  color: #FFCA40;
+  color: #FFB800;
   margin-top: 20px;
 }
 .book__rating {
@@ -192,7 +193,7 @@ html {
   display: flex;
 }
 .book__rating:hover .book__rating-star {
-  background-color: #FFCA40;
+  background-color: #FFB800;
 }
 .book__rating:hover .book__rating-star:hover {
   transform-origin: center;
@@ -207,7 +208,7 @@ html {
   mask-image: url("images/star.svg");
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
-  background-color: #FFCA40;
+  background-color: #FFB800;
   padding: 0 8px;
   width: 38px;
   height: 22px;
@@ -226,16 +227,6 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.book__add-button {
-  width: 160px;
-  height: 45px;
-  background: #FFB800;
-  border-radius: 22.5px;
-  font-size: 18px;
-  line-height: 130%;
-  text-align: center;
-  color: #FFFFFF;
 }
 .book__show-more {
   color: #000000;
@@ -286,7 +277,7 @@ html {
   font-size: 36px;
   font-weight: 700;
   text-transform: uppercase;
-  background-color: rgba(255, 202, 64, 0.7);
+  background-color: rgba(255, 184, 0, 0.7);
 }
 .book_in-bag {
   background-color: #FFFFFF;
@@ -311,7 +302,6 @@ html {
 .book_in-bag .book__buttons {
   display: none;
 }
-
 .section-caption {
   font-weight: 600;
   font-size: 50px;
@@ -337,7 +327,7 @@ html {
   width: 380px;
 }
 .bag_highlight {
-  background: #FFCA40;
+  background: #FFB800;
   transition: all 0.2s ease-in;
 }
 .bag_highlight .bag__confirm-button {
@@ -371,5 +361,5 @@ html {
 .footer__copyright {
   font-size: 28px;
   font-weight: 700;
-  color: #FFCA40;
+  color: #FFB800;
 }

@@ -28,7 +28,10 @@ addChild('.bag__total', 'div', 'price__caption', 'Total:');
 addChild('.bag__total', 'div', 'price__value', '0');
 setAttribute('.price__value', 'id', 'total-value');
 addChild('.bag__content', 'button', 'button button_confirm-order bag__confirm-button', 'Confirm Order');
-document.querySelector('.bag__confirm-button').setAttribute('disabled', '');
+element = document.querySelector('.bag__confirm-button');
+element.setAttribute('disabled', '');
+element.addEventListener('click', () => location.href = 'pages/confirm_order/index.html')
+
 addChild('.body__content', 'footer', 'footer');
 addChild('.footer', 'div', 'footer__content');
 
