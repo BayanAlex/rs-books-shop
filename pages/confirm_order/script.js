@@ -6,20 +6,16 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 const tomorrowStr = `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`;
 form.date.setAttribute('value', tomorrowStr);
 form.date.setAttribute('min', tomorrowStr);
-form.gift1.onfocus = () => console.log('focus');
-form.gift1.onfocus = form.gift2.onfocus = (event) => {
-    let prevIndex = event.target.selectedIndex;
-
-    event.target.onchange = (event) => {
-        let gift = event.target;
-        let anotherGift = event.target.name == 'gift1' ? document.querySelector('#gift2') : document.querySelector('#gift1');
-        if(gift.value != 'none') {
-            anotherGift.options[gift.selectedIndex].setAttribute('disabled', 'true');
-        }
-        anotherGift.options[prevIndex].removeAttribute('disabled');
+form.gift1.onchange = form.gift2.onchange = (event) => {
+    let gift = event.target;
+    let anotherGift = event.target.name == 'gift1' ? document.querySelector('#gift2') : document.querySelector('#gift1');
+    for(let i = 0; i < gift.options.length; i++)
+        anotherGift.options[i].removeAttribute('disabled');
+    if(gift.value != 'none') {
+        anotherGift.options[gift.selectedIndex].setAttribute('disabled', 'true');
     }
-    event.target.onblur = (event) => event.target.onchange = () => {};
 }
+
 form.onsubmit = submitOrder;
 
 function submitOrder() {
