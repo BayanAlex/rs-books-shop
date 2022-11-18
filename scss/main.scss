@@ -253,3 +253,18 @@
         scale: 1.2;
     }
 }
+
+.desc-dialog {
+    margin: 0 30%;
+    &__book-title {
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 130%;
+        margin-bottom: 20px;
+    }
+    &__book-desc {
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 140%;
+    }
+}

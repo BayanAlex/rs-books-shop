@@ -63,6 +63,7 @@ let bag = {
         document.querySelector('.bag__list').append(book);
         this.bookIndexes.push(index);
         this.total += books[index].price;
+        localStorage.bag = JSON.stringify(this.bookIndexes);
         this.setTotal();
     },
 
@@ -72,6 +73,7 @@ let bag = {
         this.bookIndexes.splice(this.bookIndexes.indexOf(index), 1);
         this.total -= books[index].price;
         book.remove();
+        localStorage.bag = JSON.stringify(this.bookIndexes);
         this.setTotal();
     },
 
@@ -84,7 +86,17 @@ let bag = {
 
 fetch('books.json').then(response => response.json()).then(data => {
     books = data;
+    if(localStorage.booksRatings) {
+        const ratings = JSON.parse(localStorage.booksRatings);
+        if(Array.isArray(ratings))
+            books.forEach((book, index) => book.rating = ratings[index]);
+    }
     addBooksToCatalogue();
+    if(localStorage.bag) {
+        const bagItems = JSON.parse(localStorage.bag);
+        if(Array.isArray(bagItems))
+            bagItems.forEach(bookIndex => bag.addBookToBag(bookIndex));
+    }
 });
 
 // *** FUNCTIONS ***
@@ -109,6 +121,37 @@ function addChild(parent, element, classList, text) {
 
 function setAttribute(element, name, value) {
     document.querySelector(element).setAttribute(name, value);
+}
+
+function createDialog(dialogClass) {
+    let dialog = document.createElement('div');
+    dialog.setAttribute('class', `dialog ${dialogClass}`);
+    let element = document.createElement('div');
+    element.setAttribute('class', `${dialogClass}__content`);
+    dialog.append(element);
+    element = document.createElement('div');
+    element.setAttribute('class', 'close-button');
+    dialog.querySelector(`.${dialogClass}__content`).append(element);
+    return dialog;
+}
+
+function showDescriptionPopup(bookIndex) {
+    addChild('.body__content', 'div', 'popup');
+    addChild('.popup', 'div', 'dialog-wrap');
+    document.querySelector('.dialog-wrap').append(createDialog('desc-dialog'));
+    addChild('.desc-dialog__content', 'div', 'desc-dialog__book-title', books[bookIndex].title);
+    addChild('.desc-dialog__content', 'div', 'desc-dialog__book-desc', books[bookIndex].description);
+    disableScroll();
+    document.querySelector('.desc-dialog__content .close-button').onclick = (event) => {
+        document.querySelector('.dialog-wrap').ontransitionend = (event) => {
+            document.querySelector('.popup').remove();
+            enableScroll();
+        }
+        document.querySelector('.dialog-wrap').classList.remove('show-dialog');
+        document.querySelector('.popup').classList.remove('show-popup');
+    };
+    document.querySelector('.dialog-wrap').classList.add('show-dialog');
+    document.querySelector('.popup').classList.add('show-popup');
 }
 
 function addBookToCatalog(index) {
@@ -154,7 +197,8 @@ function addBookToCatalog(index) {
             const parent = event.target.parentNode;
             const currentIndex = +event.target.dataset.rate;
             const book = parent.closest('.book');
-            // book.setAttribute('data-rating', currentIndex);
+            if(books[book.dataset.index].rating == currentIndex)
+                return;
             books[book.dataset.index].rating = currentIndex;
             for(let i = 0; i < 5; i++) {
                 if(i < currentIndex)
@@ -162,6 +206,7 @@ function addBookToCatalog(index) {
                 else
                     parent.children[i].classList.add('book__rating-star_not-active');
             }
+            localStorage.booksRatings = JSON.stringify(books.map(book => book.rating));
         }
         element.append(subElement);
     }
@@ -190,6 +235,7 @@ function addBookToCatalog(index) {
 
     subElement = document.createElement('button');
     subElement.setAttribute('class', 'book__show-more');
+    subElement.onclick = () => showDescriptionPopup(index);
     subElement.innerHTML = 'Show more';
     element.append(subElement);
     content.append(element);
@@ -255,3 +301,14 @@ function bookDragStart(event) {
     }
 }
 
+function disableScroll() {
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    window.onscroll = () => {
+        window.scrollTo(scrollLeft, scrollTop);
+    };
+}
+  
+function enableScroll() {
+    window.onscroll = () => {};
+}
