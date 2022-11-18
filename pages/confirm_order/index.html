@@ -10,24 +10,36 @@
 <body class="body">
     <div class="body__content">
         <div class="body__caption">Complete Order</div>
-        <form action="" name="delivery" class="delivery">
+        <form action="" name="delivery" class="delivery dialog">
             <div class="delivery__items">
                 <label for="name" class="delivery__info-caption">Name</label>
-                <input type="text" name="name" class="delivery__info-input">
+                <div class="delivery__info">
+                    <input type="text" name="name" class="delivery__info-input" required autofocus>
+                </div>
                 <label for="surname" class="delivery__info-caption">Surname</label>
-                <input type="text" name="surname" class="delivery__info-input">
+                <div class="delivery__info">
+                    <input type="text" name="surname" class="delivery__info-input" required>
+                </div>
                 <label for="date" class="delivery__info-caption">Delivery date</label>
-                <input type="date" name="date" class="delivery__info-input">
+                <div class="delivery__info">
+                    <input type="date" name="date" class="delivery__info-input" required>
+                </div>
                 <label for="street" class="delivery__info-caption">Street</label>
-                <input type="text" name="street" class="delivery__info-input">
+                <div class="delivery__info">
+                    <input type="text" name="street" class="delivery__info-input" required>
+                </div>
                 <label for="house" class="delivery__info-caption">House number</label>
-                <input type="number" name="house" class="delivery__info-input">
+                <div class="delivery__info">
+                    <input type="number" name="house" min="1" class="delivery__info-input" required>
+                </div>
                 <label for="flat" class="delivery__info-caption">Flat</label>
-                <input type="text" name="flat" class="delivery__info-input">
+                <div class="delivery__info">
+                    <input type="text" name="flat" class="delivery__info-input" required>
+                </div>
                 <label class="delivery__info-caption">Payment type</label>
                 <div class="delivery__payment-group">
-                    <label for="cash" class="delivery__info-caption">Cash <input type="radio" name="payment" id="cash" class="delivery__radio"></label>
-                    <label for="card" class="delivery__info-caption">Card <input type="radio" name="payment" id="card" checked class="delivery__radio"></label>
+                    <label for="cash" class="delivery__info-caption">Cash <input type="radio" name="payment" value="Cash" id="cash" class="delivery__radio"></label>
+                    <label for="card" class="delivery__info-caption">Card <input type="radio" name="payment" value="Card" id="card" checked class="delivery__radio"></label>
                 </div>
                 <label for="gift1" class="delivery__info-caption">Choose a gift</label>
                 <div class="delivery__drop-down-wrap">
@@ -50,9 +62,29 @@
                     </select>
                 </div>
             </div>
-            <input type="submit" class="button delivery__complete-button" value="Complete" disabled>
+            <input type="submit" name="submit" class="button delivery__complete-button" value="Complete" disabled>
             <div class="close-button" onclick="location.href = '../../index.html'"></div>
         </form>
+        <div class="order-created dialog">
+            <div class="order-created__content">
+                <div class="order-created__caption">Congratulations! Order has been completed</div>
+                <div class="order-created__summary">
+                    <div class="order-created__item-type">Customer</div>
+                    <div class="order-created__item-value" id="customer"></div>
+                    <div class="order-created__item-type">Delivery address</div>
+                    <div class="order-created__item-value" id="address"></div>
+                    <div class="order-created__item-type">Delivery date</div>
+                    <div class="order-created__item-value" id="date"></div>
+                    <div class="order-created__item-type">Payment</div>
+                    <div class="order-created__item-value" id="payment"></div>
+                    <div class="order-created__item-type">Gifts</div>
+                    <div class="order-created__item-value" id="gifts"></div>
+                </div>
+                <button class="button order-created__finish-button" onclick="location.href = '../../index.html'">Back to Shop</button>
+                <div class="close-button" onclick="location.href = '../../index.html'"></div>
+            </div>
+        </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
