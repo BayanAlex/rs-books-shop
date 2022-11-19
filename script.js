@@ -68,7 +68,7 @@ let bag = {
     },
 
     removeBookFromBag(event) {
-        let book = event.target.closest('.book');
+        let book = event.currentTarget.closest('.book');
         let index = book.dataset.index;
         this.bookIndexes.splice(this.bookIndexes.indexOf(index), 1);
         this.total -= books[index].price;
@@ -102,7 +102,7 @@ fetch('books.json').then(response => response.json()).then(data => {
 // *** FUNCTIONS ***
 
 function searchBooks(event) {
-    const searchText = event.target.value.toLowerCase();
+    const searchText = event.currentTarget.value.toLowerCase();
     document.querySelectorAll('.book_in-catalogue').forEach(book => book.style.display = book.querySelector('.book__title').textContent.toLowerCase().includes(searchText) || book.querySelector('.book__author').textContent.toLowerCase().includes(searchText) ? 'block' : 'none');
 }
 
@@ -250,13 +250,13 @@ function addBookToCatalog(index) {
 function bookDragStart(event) {
     event.preventDefault();
     let bagActive = false;
-    const coverCopy = event.target.cloneNode(true);
-    const bookIndex = event.target.closest('.book').dataset.index;
+    const coverCopy = event.currentTarget.cloneNode(true);
+    const bookIndex = event.currentTarget.closest('.book').dataset.index;
     coverCopy.style.position = 'absolute';
     document.querySelector('.main__content').append(coverCopy);
-    moveTo(event.target.getBoundingClientRect().left + window.scrollX, event.target.getBoundingClientRect().top + window.scrollY);
-    const shiftX = event.clientX - event.target.getBoundingClientRect().left;
-    const shiftY = event.clientY - event.target.getBoundingClientRect().top;
+    moveTo(event.currentTarget.getBoundingClientRect().left + window.scrollX, event.currentTarget.getBoundingClientRect().top + window.scrollY);
+    const shiftX = event.clientX - event.currentTarget.getBoundingClientRect().left;
+    const shiftY = event.clientY - event.currentTarget.getBoundingClientRect().top;
     document.addEventListener('mousemove', bookDrag);
     coverCopy.addEventListener('mouseup', bookDragStop);
     coverCopy.ondragstart = () => false;

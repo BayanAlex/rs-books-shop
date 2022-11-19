@@ -10,6 +10,7 @@
     &__content {
         width: 100%;
         height: 100%;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -39,7 +40,7 @@
     &__items {
         display: grid;
         grid-template-columns: auto 1fr;
-        grid-auto-rows: 50px;
+        grid-auto-rows: minmax(50px, min-content);
         align-items: start;
         row-gap: 5px;
         column-gap: 20px;
@@ -117,8 +118,10 @@
     &__payment {
         &-group {
             display: flex;
-            justify-content: space-around;
-            padding: 0 80px;
+            justify-content: center;
+            & label:first-child {
+                margin-right: 20px;
+            }
             & * {
                 cursor: pointer;
             }

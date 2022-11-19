@@ -40,13 +40,13 @@ function setElementText(element, text) {
 }
 
 function validateForm(event) {
-    const currentInput = event.target;
-    const nameValid = inputValid('name', !(form.name.value.length < 4 || form.name.value.match(/[^A-Za-z]/)));
-    const surnameValid = inputValid('surname', !(form.surname.value.length < 5 || form.surname.value.match(/[^A-Za-z]/)));
-    const dateValid = inputValid('date', Date.parse(form.date.value) >= Date.parse(tomorrowStr));
-    const streetValid = inputValid('street', !(form.street.value.length < 5 || form.street.value.match(/[^A-Za-z0-9. ]/)));
-    const houseValid = inputValid('house', form.house.value.match(/^[1-9][0-9]*/));
-    const flatValid = inputValid('flat', form.flat.value.match(/^[1-9](\-?[1-9][0-9]*)*$/));
+    const currentInput = event.currentTarget;
+    const nameValid = inputValid('name', !(form.name.value.length < 4 || form.name.value.match(/[^A-Za-z]/)), 'The field is invalid (minimum 4 letters, no spaces)');
+    const surnameValid = inputValid('surname', !(form.surname.value.length < 5 || form.surname.value.match(/[^A-Za-z]/)), 'The field is invalid (minimum 5 letters, no spaces)');
+    const dateValid = inputValid('date', Date.parse(form.date.value) >= Date.parse(tomorrowStr), 'The field is invalid (not earlier than tomorrow)');
+    const streetValid = inputValid('street', !(form.street.value.length < 5 || form.street.value.match(/[^A-Za-z0-9. ]/)), 'The field is invalid (minimum 5 letters/numbers)');
+    const houseValid = inputValid('house', form.house.value.match(/^[1-9][0-9]*/), 'The field is invalid (positive numbers only)');
+    const flatValid = inputValid('flat', form.flat.value.match(/^[1-9](\-?[1-9][0-9]*)*$/), 'The field is invalid (positive numbers and dash only)');
     const formValid = true && nameValid && surnameValid && dateValid && streetValid && houseValid && flatValid;
     if(formValid)
         form.submit.removeAttribute('disabled');
@@ -70,10 +70,10 @@ function validateForm(event) {
         }
     }
 
-    function inputValid(fieldName, condition) {
+    function inputValid(fieldName, condition, message) {
         if(!condition) {
             if(currentInput.name == fieldName) 
-                setInvalid('The field is invalid');
+                setInvalid(message);
             return false;
         }
         if(currentInput.name == fieldName)

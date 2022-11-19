@@ -4,7 +4,7 @@
     background-color: #F8F8F8;
     &__content {
         height: 100px;
-        padding: 70px;
+        padding: min(70px, 5%);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -15,6 +15,7 @@
     &__copyright {
         font-size: 28px;
         font-weight: 700;
+        text-align: center;
         color: $main-color;
     }
 }

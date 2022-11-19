@@ -1,10 +1,12 @@
 @import '../assets/scss/mixin-var.scss';
 
 .main {
+    width: 100%;
     &__content {
-        padding: 70px;
+        padding: min(70px, 5%);
         display: grid;
         grid-template-columns: 1fr auto;
+        overflow: auto;
     }
 }
 
@@ -74,6 +76,9 @@
                 & ~ div {
                     background-color: lightgray;
                 }
+            }
+            &:active {
+                filter: brightness(125%);
             }
         }
         &-star {
@@ -176,6 +181,9 @@
                                     'author'
                                     'price';
         }
+        & .book__img-wrap {
+            justify-self: center;
+        }
         & .book__title {
             font-size: 18px;
         }
@@ -205,7 +213,7 @@
 }
 
 .catalogue {
-    padding: 50px;
+    padding: min(50px, 5vw);
     &__caption {
 
     }
@@ -232,7 +240,7 @@
         }
     }
     &__content {
-        padding: 50px;
+        padding: min(50px, 5vw);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -255,7 +263,8 @@
 }
 
 .desc-dialog {
-    margin: 0 30%;
+    margin: 0 auto;
+    width: min(768px, 80%);
     &__book-title {
         font-weight: 600;
         font-size: 28px;
