@@ -40,7 +40,7 @@ function setElementText(element, text) {
 }
 
 function validateForm(event) {
-    const currentInput = event.target;
+    const currentInput = event.currentTarget;
     const nameValid = inputValid('name', !(form.name.value.length < 4 || form.name.value.match(/[^A-Za-z]/)), 'The field is invalid (minimum 4 letters, no spaces)');
     const surnameValid = inputValid('surname', !(form.surname.value.length < 5 || form.surname.value.match(/[^A-Za-z]/)), 'The field is invalid (minimum 5 letters, no spaces)');
     const dateValid = inputValid('date', Date.parse(form.date.value) >= Date.parse(tomorrowStr), 'The field is invalid (not earlier than tomorrow)');

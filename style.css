@@ -14,6 +14,11 @@ html {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  width: auto;
+  overflow: auto;
+}
+.body__content {
+  width: 100%;
 }
 
 .button {
@@ -101,7 +106,7 @@ html {
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
-  padding: 50px 100px 50px;
+  padding: min(50px, 10%) min(100px, 5%) min(50px, 10%);
 }
 .dialog-wrap {
   position: absolute;
@@ -127,7 +132,9 @@ html {
 .header {
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%), url(images/HeaderBG.png) top left/contain repeat;
   width: 100%;
-  height: 400px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 .header__content {
   height: 100%;
@@ -139,17 +146,18 @@ html {
   justify-content: space-between;
 }
 .header__caption {
-  width: 750px;
+  width: min(80%, 750px);
   font-weight: 700;
   font-size: 70px;
   line-height: 110%;
   margin: 0;
   text-align: center;
   color: #FFFFFF;
+  margin-bottom: 50px;
 }
 .header__search-input {
   position: relative;
-  width: 600px;
+  width: min(80%, 600px);
   height: 55px;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.25), 0px 40px 40px -15px rgba(0, 0, 0, 0.3);
   border-radius: 100px;
@@ -173,10 +181,14 @@ html {
   cursor: pointer;
 }
 
+.main {
+  width: 100%;
+}
 .main__content {
-  padding: 70px;
+  padding: min(70px, 5%);
   display: grid;
   grid-template-columns: 1fr auto;
+  overflow: auto;
 }
 
 .price {
@@ -338,6 +350,9 @@ html {
   grid-template-rows: auto;
   grid-template-areas: "book-cover" "title" "author" "price";
 }
+.book_in-bag .book__img-wrap {
+  justify-self: center;
+}
 .book_in-bag .book__title {
   font-size: 18px;
 }
@@ -361,7 +376,7 @@ html {
 }
 
 .catalogue {
-  padding: 50px;
+  padding: min(50px, 5vw);
 }
 .catalogue__list {
   display: grid;
@@ -384,7 +399,7 @@ html {
   color: #000000;
 }
 .bag__content {
-  padding: 50px;
+  padding: min(50px, 5vw);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -395,7 +410,8 @@ html {
 }
 
 .desc-dialog {
-  margin: 0 30%;
+  margin: 0 auto;
+  width: min(768px, 80%);
 }
 .desc-dialog__book-title {
   font-weight: 600;
@@ -414,7 +430,7 @@ html {
 }
 .footer__content {
   height: 100px;
-  padding: 70px;
+  padding: min(70px, 5%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -425,5 +441,6 @@ html {
 .footer__copyright {
   font-size: 28px;
   font-weight: 700;
+  text-align: center;
   color: #FFB800;
 }
