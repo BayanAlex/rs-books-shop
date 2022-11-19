@@ -21,7 +21,7 @@ addChild('.catalogue__content', 'h2', 'catalogue__caption section-caption', 'Boo
 addChild('.catalogue__content', 'div', 'catalogue__list');
 addChild('.main__content', 'div', 'bag');
 addChild('.bag', 'div', 'bag__content');
-addChild('.bag__content', 'h2', 'bag__caption section-caption', 'Order Books');
+addChild('.bag__content', 'h2', 'bag__caption section-caption', 'Your Bag');
 addChild('.bag__content', 'div', 'bag__list');
 addChild('.bag__content', 'div', 'bag__total price');
 addChild('.bag__total', 'div', 'price__caption', 'Total:');
