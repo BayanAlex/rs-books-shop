@@ -75,6 +75,9 @@
                     background-color: lightgray;
                 }
             }
+            &:active {
+                filter: brightness(125%);
+            }
         }
         &-star {
             -webkit-mask-image: url('images/star.svg');

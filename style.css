@@ -249,6 +249,9 @@ html {
 .book__rating:hover .book__rating-star:hover ~ div {
   background-color: lightgray;
 }
+.book__rating:hover .book__rating-star:active {
+  filter: brightness(125%);
+}
 .book__rating-star {
   -webkit-mask-image: url("images/star.svg");
   mask-image: url("images/star.svg");
