@@ -42,8 +42,9 @@ html {
   background: lightgray;
   cursor: default;
 }
-.button:active:hover {
+.button:active:not(:disabled):hover {
   scale: 1;
+  filter: brightness(110%);
 }
 
 .close-button {
@@ -132,9 +133,7 @@ html {
 .body {
   background-color: #F5F5F5;
   width: 100%;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+  height: 100%;
 }
 .body__content {
   width: 100%;

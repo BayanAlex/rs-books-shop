@@ -73,12 +73,12 @@
                 transform-origin: center;
                 scale: 1.2;
                 transition: all 0.2s ease-in;
-                & ~ div {
+                & ~ div:not(:active) {
                     background-color: lightgray;
                 }
             }
-            &:active {
-                filter: brightness(125%);
+            &:active:hover {
+                filter: brightness(110%);
             }
         }
         &-star {

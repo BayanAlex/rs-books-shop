@@ -42,8 +42,9 @@ html {
   background: lightgray;
   cursor: default;
 }
-.button:active:hover {
+.button:active:not(:disabled):hover {
   scale: 1;
+  filter: brightness(110%);
 }
 
 .close-button {
@@ -258,11 +259,11 @@ html {
   scale: 1.2;
   transition: all 0.2s ease-in;
 }
-.book__rating:hover .book__rating-star:hover ~ div {
+.book__rating:hover .book__rating-star:hover ~ div:not(:active) {
   background-color: lightgray;
 }
-.book__rating:hover .book__rating-star:active {
-  filter: brightness(125%);
+.book__rating:hover .book__rating-star:active:hover {
+  filter: brightness(110%);
 }
 .book__rating-star {
   -webkit-mask-image: url("images/star.svg");
