@@ -22,8 +22,7 @@ html {
 }
 
 .button {
-  width: 160px;
-  height: 45px;
+  padding: 11px 36px;
   background: #FFB800;
   border-radius: 22.5px;
   font-size: 18px;
@@ -45,6 +44,11 @@ html {
 .button:active:not(:disabled):hover {
   scale: 1;
   filter: brightness(110%);
+}
+.button_round {
+  height: 45px;
+  width: 45px;
+  padding: 0;
 }
 
 .close-button {
@@ -95,6 +99,7 @@ html {
   justify-content: center;
   align-items: center;
   transition: all 0.5s linear;
+  z-index: 10;
 }
 
 .show-popup {
@@ -119,7 +124,6 @@ html {
   block-size: -moz-fit-content;
   block-size: fit-content;
   opacity: 0;
-  transform: skewY();
   transition: all 0.5s ease-out;
 }
 
@@ -176,6 +180,12 @@ html {
        column-gap: 20px;
 }
 .delivery__items * {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 130%;
+}
+.delivery__items option {
+  font: -moz-pull-down-menu;
   font-weight: 400;
   font-size: 18px;
   line-height: 130%;
