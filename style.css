@@ -22,8 +22,7 @@ html {
 }
 
 .button {
-  width: 160px;
-  height: 45px;
+  padding: 11px 36px;
   background: #FFB800;
   border-radius: 22.5px;
   font-size: 18px;
@@ -42,8 +41,14 @@ html {
   background: lightgray;
   cursor: default;
 }
-.button:active:hover {
+.button:active:not(:disabled):hover {
   scale: 1;
+  filter: brightness(110%);
+}
+.button_round {
+  height: 45px;
+  width: 45px;
+  padding: 0;
 }
 
 .close-button {
@@ -94,6 +99,7 @@ html {
   justify-content: center;
   align-items: center;
   transition: all 0.5s linear;
+  z-index: 10;
 }
 
 .show-popup {
@@ -118,7 +124,6 @@ html {
   block-size: -moz-fit-content;
   block-size: fit-content;
   opacity: 0;
-  transform: skewY();
   transition: all 0.5s ease-out;
 }
 
@@ -185,7 +190,7 @@ html {
   width: 100%;
 }
 .main__content {
-  padding: min(70px, 5%);
+  padding: min(70px, 5vw);
   display: grid;
   grid-template-columns: 1fr auto;
   overflow: auto;
@@ -258,11 +263,11 @@ html {
   scale: 1.2;
   transition: all 0.2s ease-in;
 }
-.book__rating:hover .book__rating-star:hover ~ div {
+.book__rating:hover .book__rating-star:hover ~ div:not(:active) {
   background-color: lightgray;
 }
-.book__rating:hover .book__rating-star:active {
-  filter: brightness(125%);
+.book__rating:hover .book__rating-star:active:hover {
+  filter: brightness(110%);
 }
 .book__rating-star {
   -webkit-mask-image: url("images/star.svg");
@@ -343,7 +348,6 @@ html {
 .book_in-bag {
   background-color: #FFFFFF;
   border-radius: 15px;
-  margin-bottom: 30px;
 }
 .book_in-bag .book__content {
   grid-template-columns: 1fr;
@@ -389,6 +393,22 @@ html {
   border-radius: 10px;
   transition: all 0.2s ease-out;
   width: 380px;
+  min-height: 100vh;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.bag-wrap {
+  width: 380px;
+  height: 100%;
+}
+.bag_fixed {
+  position: fixed;
+  top: 0;
+  right: min(70px, 5vw);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0;
 }
 .bag_highlight {
   background: #FFB800;
@@ -403,6 +423,77 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.bag__list {
+  display: grid;
+  -moz-column-gap: 32px;
+       column-gap: 32px;
+  grid-template-rows: 1fr;
+  grid-auto-flow: column;
+  width: 312px;
+  padding: 16px 16px 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.bag__list::-webkit-scrollbar {
+  display: none;
+}
+.bag__list-wrap {
+  position: relative;
+}
+.bag__arrow {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 45px;
+  height: 45px;
+  background-color: transparent;
+  transition: scale 0.2s ease-out, filter 0.2s ease-out;
+  transform-origin: center;
+}
+.bag__arrow:disabled::after {
+  background-color: lightgray;
+  cursor: default;
+}
+.bag__arrow:hover:not(:disabled) {
+  scale: 1.05;
+  transition: scale 0.2s ease-in, filter 0.2s ease-in;
+}
+.bag__arrow:hover:not(:disabled):active {
+  filter: brightness(110%);
+  scale: 1;
+}
+.bag__arrow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFB800;
+  -webkit-mask-image: url("images/chevron-right-solid.svg");
+  mask-image: url("images/chevron-right-solid.svg");
+  -webkit-mask-position-x: 50%;
+  -webkit-mask-position-y: 50%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+}
+.bag__arrow_left {
+  left: -31px;
+  transform: rotate(180deg);
+}
+.bag__arrow_right {
+  right: -31px;
+  transform: rotate(360deg);
+}
+.bag__arrow-img {
+  width: 100%;
+  height: 100%;
+  background-color: #FFB800;
 }
 .bag__total {
   margin: 20px 0;
@@ -426,11 +517,11 @@ html {
 }
 
 .footer {
+  position: relative;
   background-color: #F8F8F8;
 }
 .footer__content {
-  height: 100px;
-  padding: min(70px, 5%);
+  padding: 20px min(70px, 5%);
   display: flex;
   justify-content: space-between;
   align-items: center;
