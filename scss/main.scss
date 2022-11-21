@@ -100,6 +100,53 @@
         grid-area: price;
         align-self: start;
     }
+    &__amount {
+        grid-area: amount;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        &-number {
+            width: 20%;
+            font-size: 22px;
+            text-align: center;
+            pointer-events: none;
+            caret-color: transparent;
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            &[type="number"] {
+                -moz-appearance: textfield;
+            }
+        }
+        &-button {
+            position: relative;
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                border-radius: 2px;
+                transform: translate(-50%, -50%);
+                background-color: #FFFFFF;
+            }
+            &::before {
+                width: 15px;
+                height: 3px;
+            }
+            &_minus {
+
+            }
+            &_plus {
+                &::after {
+                    height: 15px;
+                    width: 3px;
+                }
+            }
+        }
+    }
     &__buttons {
         grid-area: buttons;
         display: flex;
@@ -149,6 +196,9 @@
         & .close-button {
             display: none;
         }
+        & .book__amount {
+            display: none;
+        }
         & .book__img-wrap:hover::after {
             content: 'Drag to bag';
             word-spacing: 100vw;
@@ -171,15 +221,15 @@
     &_in-bag {
         background-color: #FFFFFF;
         border-radius: 15px;
-        // margin-bottom: 30px;
-        // margin: 16px;
+        // scroll-snap-align: end;
         & .book__content {
             grid-template-columns: 1fr;
             grid-template-rows: auto;
             grid-template-areas:    'book-cover'
                                     'title'
                                     'author'
-                                    'price';
+                                    'price'
+                                    'amount';
         }
         & .book__img-wrap {
             justify-self: center;
@@ -241,6 +291,7 @@
         right: min(70px, 5vw);
         overflow-y: auto;
         overflow-x: hidden;
+        height: 100vh;
         border-radius: 0;
     }
     &_highlight {
@@ -269,7 +320,7 @@
         padding: 16px 16px 0;
         overflow-x: auto;
         scroll-behavior: smooth;
-        scrollbar-width: none;
+        // scroll-snap-type: x proximity;
         &::-webkit-scrollbar {
             display: none;
         }
