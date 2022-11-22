@@ -432,6 +432,7 @@ html {
 
 .catalogue {
   padding: min(50px, 5vw);
+  min-height: 100vh;
 }
 .catalogue__list {
   display: grid;
