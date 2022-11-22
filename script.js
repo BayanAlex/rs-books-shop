@@ -31,6 +31,7 @@ setAttribute('.bag__arrow_left', 'id', 'carousel_prev');
 addChild('.bag__list-wrap', 'button', 'bag__arrow bag__arrow_right');
 setAttribute('.bag__arrow_right', 'id', 'carousel_next');
 document.querySelector('.bag__list-wrap').addEventListener('click', carouselClick);
+document.querySelector('.bag__list').addEventListener('scroll', carouselScroll);
 addChild('.bag__content', 'div', 'bag__total price');
 addChild('.bag__total', 'div', 'price__caption', 'Total:');
 addChild('.bag__total', 'div', 'price__value', '0');
@@ -151,18 +152,25 @@ function carouselClick(event) {
     switch(event.target.id) {
     case 'carousel_next':
         carousel.scrollBy(width, 0);
-        carouselEnableControl(carousel_prev);
-        if(carousel.scrollWidth <= carousel.scrollLeft + width * 2) {
-            carouselDisableControl(carousel_next);;
-        }
         break;
     case 'carousel_prev':
         carousel.scrollBy(-width, 0);
-        carouselEnableControl(carousel_next);
-        if(carousel.scrollLeft <= width) {
-            carouselDisableControl(carousel_prev);
-        }
         break;
+    }
+}
+
+function carouselScroll(event) {
+    if(carousel.scrollLeft == 0) {
+        carouselDisableControl(carousel_prev);
+        carouselEnableControl(carousel_next);
+    } else {
+        carouselEnableControl(carousel_prev);
+    }
+    if(carousel.scrollWidth == carousel.scrollLeft + carousel.clientWidth) {
+        carouselDisableControl(carousel_next);
+        carouselEnableControl(carousel_prev);
+    } else {
+        carouselEnableControl(carousel_next);
     }
 }
 
@@ -173,23 +181,12 @@ function carouselScrollToEnd() {
     }
     carousel.scrollBy(carousel.scrollWidth, 0);
     carouselShowControls();
-    carouselEnableControl(carousel_prev);
-    carouselDisableControl(carousel_next);
 }
 
 function carouselSetControls() {
     const width = carousel.clientWidth;
     if(bag.count() > 1) {
         carouselShowControls();
-        if(carousel.scrollLeft == 0)
-            carouselDisableControl(carousel_prev);
-        else
-            carouselEnableControl(carousel_prev);
-
-        if(carousel.scrollWidth == carousel.scrollLeft + width)
-            carouselDisableControl(carousel_next);
-        else
-            carouselEnableControl(carousel_next);
     } else {
         carouselHideControls();
     }
