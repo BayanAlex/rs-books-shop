@@ -1,3 +1,4 @@
+let carouselSrollTimer;
 let parent = document.querySelector('body');
 let element = document.createElement('div');
 element.classList.add('body__content');
@@ -135,6 +136,7 @@ function onWindowScroll(event) {
     if(window.pageYOffset >= document.querySelector('.header').clientHeight + parseInt(getComputedStyle(document.querySelector('.main__content')).paddingTop)) {
         bag.classList.add('bag_fixed');
     } else {
+        // if(bag.style.height == '')
         bag.classList.remove('bag_fixed');
     }
     if(window.innerHeight + window.scrollY >= document.body.offsetHeight - document.querySelector('.footer').clientHeight) {
@@ -160,6 +162,14 @@ function carouselClick(event) {
 }
 
 function carouselScroll(event) {
+    clearTimeout(carouselSrollTimer);
+    carouselSrollTimer = setTimeout(() => {
+        const width = carousel.clientWidth;
+        if(carousel.scrollLeft % width == 0)
+            return;
+        carousel.scrollTo(Math.round(carousel.scrollLeft / width) * width, 0);
+    }, 300);
+    
     if(carousel.scrollLeft == 0) {
         carouselDisableControl(carousel_prev);
         carouselEnableControl(carousel_next);
