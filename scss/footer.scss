@@ -1,10 +1,10 @@
 @import '../assets/scss/mixin-var.scss';
 
 .footer {
+    position: relative;
     background-color: #F8F8F8;
     &__content {
-        height: 100px;
-        padding: min(70px, 5%);
+        padding: 20px min(70px, 5%);
         display: flex;
         justify-content: space-between;
         align-items: center;

@@ -1,3 +1,4 @@
+let carouselSrollTimer;
 let parent = document.querySelector('body');
 let element = document.createElement('div');
 element.classList.add('body__content');
@@ -19,10 +20,19 @@ addChild('.main__content', 'div', 'catalogue');
 addChild('.catalogue', 'div', 'catalogue__content');
 addChild('.catalogue__content', 'h2', 'catalogue__caption section-caption', 'Book Catalog');
 addChild('.catalogue__content', 'div', 'catalogue__list');
-addChild('.main__content', 'div', 'bag');
+addChild('.main__content', 'div', 'bag-wrap');
+addChild('.bag-wrap', 'div', 'bag');
 addChild('.bag', 'div', 'bag__content');
 addChild('.bag__content', 'h2', 'bag__caption section-caption', 'Your Bag');
-addChild('.bag__content', 'div', 'bag__list');
+addChild('.bag__content', 'div', 'bag__list-wrap');
+addChild('.bag__list-wrap', 'div', 'bag__list');
+setAttribute('.bag__list', 'id', 'carousel');
+addChild('.bag__list-wrap', 'button', 'bag__arrow bag__arrow_left');
+setAttribute('.bag__arrow_left', 'id', 'carousel_prev');
+addChild('.bag__list-wrap', 'button', 'bag__arrow bag__arrow_right');
+setAttribute('.bag__arrow_right', 'id', 'carousel_next');
+document.querySelector('.bag__list-wrap').addEventListener('click', carouselClick);
+document.querySelector('.bag__list').addEventListener('scroll', carouselScroll);
 addChild('.bag__content', 'div', 'bag__total price');
 addChild('.bag__total', 'div', 'price__caption', 'Total:');
 addChild('.bag__total', 'div', 'price__value', '0');
@@ -49,39 +59,59 @@ document.querySelector('.footer__rs-img').setAttribute('src', 'images/logo-rssch
 
 document.querySelector('.bag__confirm-button').setAttribute('disabled', '');
 
+enableScroll();
+
 let books = [];
 let bag = {
-    bookIndexes: [],
+    books: [],
     total: 0,
-    addBookToBag(index) {
-        if(this.bookIndexes.includes(index))
+    addBookToBag(index, amount) {
+        if(this.books.findIndex(v => v.index == index) >= 0)
             return;
         let book = document.querySelector(`.book[data-index='${index}']`).cloneNode(true);
         book.classList.remove('book_in-catalogue');
         book.classList.add('book_in-bag');
         book.querySelector('.close-button').onclick = (event) => this.removeBookFromBag(event);
+        book.querySelectorAll('.button_spin').forEach(spin => spin.onclick = changeAmount);
+        book.querySelector('.book__amount-number').value = amount;
+        if(amount > 1)
+            book.querySelector('.book__amount-button_minus').removeAttribute('disabled');
         document.querySelector('.bag__list').append(book);
-        this.bookIndexes.push(index);
-        this.total += books[index].price;
-        localStorage.bag = JSON.stringify(this.bookIndexes);
+        this.books.push({'index': index, 'amount': amount});
         this.setTotal();
+        carouselScrollToEnd();
     },
 
     removeBookFromBag(event) {
         let book = event.currentTarget.closest('.book');
         let index = book.dataset.index;
-        this.bookIndexes.splice(this.bookIndexes.indexOf(index), 1);
-        this.total -= books[index].price;
+        this.books.splice(this.books.findIndex(v => v.index == index), 1);
         book.remove();
-        localStorage.bag = JSON.stringify(this.bookIndexes);
         this.setTotal();
+        carouselSetControls();
     },
 
     setTotal() {
+        this.total = this.books.reduce((sum, v, i) => sum + books[v.index].price * v.amount, 0) || 0;
         document.querySelector('.bag__total .price__value').innerHTML = this.total;
         const button = document.querySelector('.bag__confirm-button');
         this.total == 0 ? button.setAttribute("disabled", "") : button.removeAttribute("disabled");
-    }
+        localStorage.bag = JSON.stringify(this.books);
+    },
+
+    count() {
+        return this.books.length;
+    },
+
+    increaseAmount(index) {
+        this.books[this.books.findIndex(v => v.index == index)].amount++;
+        this.setTotal();
+    },
+
+    decreaseAmount(index) {
+        this.books[this.books.findIndex(v => v.index == index)].amount--;
+        this.setTotal();
+    },
 };
 
 fetch('books.json').then(response => response.json()).then(data => {
@@ -95,11 +125,100 @@ fetch('books.json').then(response => response.json()).then(data => {
     if(localStorage.bag) {
         const bagItems = JSON.parse(localStorage.bag);
         if(Array.isArray(bagItems))
-            bagItems.forEach(bookIndex => bag.addBookToBag(bookIndex));
+            bagItems.forEach(book => bag.addBookToBag(book.index, book.amount));
     }
 });
 
 // *** FUNCTIONS ***
+
+function onWindowScroll(event) {
+    const bag = document.querySelector('.bag');
+    if(window.pageYOffset >= document.querySelector('.header').clientHeight + parseInt(getComputedStyle(document.querySelector('.main__content')).paddingTop)) {
+        bag.classList.add('bag_fixed');
+    } else {
+        // if(bag.style.height == '')
+        bag.classList.remove('bag_fixed');
+    }
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight - document.querySelector('.footer').clientHeight) {
+        const height = document.body.offsetHeight - window.scrollY - document.querySelector('.footer').clientHeight + 'px';
+        bag.style.minHeight = bag.style.height = height;
+    } else {
+        bag.style.minHeight = bag.style.height = '';
+    }
+}
+
+function carouselClick(event) {
+    const width = carousel.clientWidth;
+    if(carousel.scrollLeft % width != 0)
+        return;
+    switch(event.target.id) {
+    case 'carousel_next':
+        carousel.scrollBy(width, 0);
+        break;
+    case 'carousel_prev':
+        carousel.scrollBy(-width, 0);
+        break;
+    }
+}
+
+function carouselScroll(event) {
+    clearTimeout(carouselSrollTimer);
+    carouselSrollTimer = setTimeout(() => {
+        const width = carousel.clientWidth;
+        if(carousel.scrollLeft % width == 0)
+            return;
+        carousel.scrollTo(Math.round(carousel.scrollLeft / width) * width, 0);
+    }, 300);
+    
+    if(carousel.scrollLeft == 0) {
+        carouselDisableControl(carousel_prev);
+        carouselEnableControl(carousel_next);
+    } else {
+        carouselEnableControl(carousel_prev);
+    }
+    if(carousel.scrollWidth == carousel.scrollLeft + carousel.clientWidth) {
+        carouselDisableControl(carousel_next);
+        carouselEnableControl(carousel_prev);
+    } else {
+        carouselEnableControl(carousel_next);
+    }
+}
+
+function carouselScrollToEnd() {
+    if(bag.count() < 2) {
+        carouselHideControls();
+        return;
+    }
+    carousel.scrollBy(carousel.scrollWidth, 0);
+    carouselShowControls();
+}
+
+function carouselSetControls() {
+    const width = carousel.clientWidth;
+    if(bag.count() > 1) {
+        carouselShowControls();
+    } else {
+        carouselHideControls();
+    }
+}
+
+function carouselDisableControl(control) {
+    control.setAttribute('disabled', '');
+}
+
+function carouselEnableControl(control) {
+    control.removeAttribute('disabled');
+}
+
+function carouselHideControls() {
+    carousel_prev.style.display = 'none';
+    carousel_next.style.display = 'none';
+}
+
+function carouselShowControls() {
+    carousel_prev.style.display = 'block';
+    carousel_next.style.display = 'block';
+}
 
 function searchBooks(event) {
     const searchText = event.currentTarget.value.toLowerCase();
@@ -144,8 +263,10 @@ function showDescriptionPopup(bookIndex) {
     disableScroll();
     document.querySelector('.desc-dialog__content .close-button').onclick = (event) => {
         document.querySelector('.dialog-wrap').ontransitionend = (event) => {
-            document.querySelector('.popup').remove();
-            enableScroll();
+            if(document.querySelector('.popup')) {
+                document.querySelector('.popup').remove();
+                enableScroll();
+            }
         }
         document.querySelector('.dialog-wrap').classList.remove('show-dialog');
         document.querySelector('.popup').classList.remove('show-popup');
@@ -158,7 +279,6 @@ function addBookToCatalog(index) {
     let currentBook = books[index];
     let book = document.createElement('div');
     book.setAttribute('class', 'book book_in-catalogue');
-    // book.setAttribute('data-rating', currentBook.rating);
     book.dataset.index = index;
 
     let content = document.createElement('div');
@@ -225,11 +345,30 @@ function addBookToCatalog(index) {
     content.append(element);
 
     element = document.createElement('div');
+    element.setAttribute('class', 'book__amount');
+    subElement = document.createElement('button');
+    subElement.setAttribute('class', 'button button_spin book__amount-button book__amount-button_minus');
+    subElement.setAttribute('data-type', 'minus');
+    subElement.setAttribute('disabled', '');
+    element.append(subElement);
+    subElement = document.createElement('input');
+    subElement.setAttribute('type', 'number');
+    subElement.setAttribute('min', '1');
+    subElement.setAttribute('value', '1');
+    subElement.classList.add('book__amount-number');
+    element.append(subElement);
+    subElement = document.createElement('button');
+    subElement.setAttribute('class', 'button button_spin book__amount-button book__amount-button_plus');
+    subElement.setAttribute('data-type', 'plus');
+    element.append(subElement);
+    content.append(element);
+
+    element = document.createElement('div');
     element.setAttribute('class', 'book__buttons');
 
     subElement = document.createElement('button');
     subElement.setAttribute('class', 'button button_add-to-bag book__add-button');
-    subElement.onclick = (event) => bag.addBookToBag(event.target.closest('.book').dataset.index);
+    subElement.onclick = (event) => bag.addBookToBag(event.target.closest('.book').dataset.index, 1);
     subElement.innerHTML = 'Add to bag';
     element.append(subElement);
 
@@ -293,7 +432,7 @@ function bookDragStart(event) {
     function bookDragStop(event) {
         if(bagActive) {
             document.querySelector('.bag').classList.remove('bag_highlight');
-            bag.addBookToBag(bookIndex);
+            bag.addBookToBag(bookIndex, 1);
         }
         document.removeEventListener('mousemove', bookDrag);
         coverCopy.onmouseup = null;
@@ -308,7 +447,26 @@ function disableScroll() {
         window.scrollTo(scrollLeft, scrollTop);
     };
 }
-  
+
 function enableScroll() {
-    window.onscroll = () => {};
+    window.onscroll = onWindowScroll;
+}
+
+function changeAmount(event) {
+    const spin = event.target;
+    const input = spin.parentNode.querySelector('input');
+    const value = +input.value;
+    const index = +spin.closest('.book').dataset.index;
+    if(spin.dataset.type == 'minus') {
+        if(input.value >  1) {
+            input.value = value - 1;
+            if(input.value == 1)
+                spin.setAttribute('disabled', '');
+            bag.decreaseAmount(index);
+        }
+    } else if(spin.dataset.type == 'plus') {
+        input.value = value + 1;
+        spin.parentNode.querySelector('button[data-type="minus"]').removeAttribute('disabled');
+        bag.increaseAmount(index);
+    }
 }
