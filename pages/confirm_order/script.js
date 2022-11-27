@@ -46,7 +46,7 @@ function validateForm(event) {
     const dateValid = inputValid('date', Date.parse(form.date.value) >= Date.parse(tomorrowStr), 'The field is invalid (not earlier than tomorrow)');
     const streetValid = inputValid('street', !(form.street.value.length < 5 || form.street.value.match(/[^A-Za-z0-9. ]/)), 'The field is invalid (minimum 5 letters/numbers)');
     const houseValid = inputValid('house', form.house.value.match(/^[1-9][0-9]*/), 'The field is invalid (positive numbers only)');
-    const flatValid = inputValid('flat', form.flat.value.match(/^[1-9](\-?[1-9][0-9]*)*$/), 'The field is invalid (positive numbers and dash only)');
+    const flatValid = inputValid('flat', form.flat.value.match(/^[1-9]((\-[1-9])?[0-9]*)*$/), 'The field is invalid (positive numbers and dash only)');
     const formValid = true && nameValid && surnameValid && dateValid && streetValid && houseValid && flatValid;
     if(formValid)
         form.submit.removeAttribute('disabled');
