@@ -11,4 +11,8 @@
   
 `HTML` `SCSS` `JavaScript`  
 
+<details>
+<summary>Screenshots</summary>
+
 [![LINK](https://github.com/BayanAlex/portfolio/blob/main/img/bookshop.png)](https://bayanalex.github.io/rs-books-shop/)
+</details>
